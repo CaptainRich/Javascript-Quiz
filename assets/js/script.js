@@ -44,11 +44,75 @@ var quizData = [
 ];
 
 
+///////////////////////////////////////////////////////////////////////////////////
+// Define the function to save all the tasks to 'localStorage'
+var saveScores = function() {
+
+    // When pushing to 'localStorage' (which converts everything to a string), use a JSON converstion 
+    // so we can have a visual of what got stored.
+    localStorage.setItem( "highScore", JSON.stringify(highScore) );
+ 
+}
+
+
+// /////////////////////////////////////////////////////////////////////////////////// 
+// Define the function to load all the tasks from 'localStorage'
+var loadScores = function() {
+
+    // Get the tasks from local storage
+    highScore = localStorage.getItem( "highScore" );
+
+    if( highScore === null ) {
+        highScore= [];
+        return false;             // nothing in browsers local storage
+    }
+ 
+    // Convert the score info from stringified format back into an array of objects
+    highScore = JSON.parse( highScore );
+    
+ 
+
+
+        // var listItemEl = document.createElement( "li" );   // create the "li" item/selector. 
+        // listItemEl.className = "task-item";                // assign the proper class to this new item. 
+    
+        // // Add a 'task-id' value as a custom attribute, so we know which task is which. 
+        // listItemEl.setAttribute("data-task-id", tasks[i].id );
+        // listItemEl.setAttribute("draggable", "true");      // also set this element to be draggable
+    
+        // // Create a 'div' to hold the task info and add it to the list item just created. 
+        // var taskInfoEl = document.createElement( "div" );
+        // taskInfoEl.className = "task-info";                // give the 'div' a class name
+    
+        // // Add content and style to this new 'div' element 
+        // taskInfoEl.innerHTML = "<h3 class='task-name'>" + tasks[i].name + "</h3><span class='task-type'>" + tasks[i].type + "</span>";
+    
+        // // Put things all together using .appendChild 
+        // listItemEl.appendChild( taskInfoEl );                    // this adds the 'h3' and 'span' data 
+        // var taskActionsEl = createTaskActions( tasks[i].id );    // create the action buttons
+        // listItemEl.appendChild( taskActionsEl );                 // add the buttons to the 'li'
+      
+        // // Now we need to put the tasks into the appropriate status columns
+        // if( tasks[i].status === "to do" ) {
+        //     listItemEl.querySelector( "select[name='status-change']").selectedIndex = 0;
+        //     tasksToDoEl.appendChild(listItemEl);
+        // }
+        // else if( tasks[i].status === "in progress" ) {
+        //     listItemEl.querySelector( "select[name='status-change']").selectedIndex = 1;
+        //     tasksInProgressEl.appendChild(listItemEl);
+        // }
+        // else if( tasks[i].status === "completed" ) {
+        //     listItemEl.querySelector( "select[name='status-change']").selectedIndex = 2;
+        //     tasksCompletedEl.appendChild(listItemEl);
+        // }
+
+    
+}
 // ///////////////////////////////////////////////////////////////////////////////////  
 //Define an anonymous function to create a new task item  
-var taskFormHandler = function( event ) {
+var quizHandler = function( event ) {
 
-    event.preventDefault();                 // prevent the browser from reloading the page. 
+   // event.preventDefault();                 // prevent the browser from reloading the page. 
 
     // Obtain the task name and type just defined from the input form. 
     var taskNameInput = document.querySelector( "input[name='task-name']").value;
@@ -398,101 +462,15 @@ var dropTaskHandler = function( event ) {
 
 
 // /////////////////////////////////////////////////////////////////////////////////// 
-// Define the function to save all the tasks to 'localStorage'
-var saveTasks = function() {
 
-    // When pushing to 'localStorage' (which converts everything to a string), use a JSON converstion 
-    // so we can have a visual of what got stored.
-    localStorage.setItem( "tasks", JSON.stringify(tasks) );
- 
-}
-
-
-// /////////////////////////////////////////////////////////////////////////////////// 
-// Define the function to load all the tasks from 'localStorage'
-var loadTasks = function() {
-
-    // Get the tasks from local storage
-    tasks = localStorage.getItem( "tasks" );
-
-    if( tasks === null ) {
-        tasks= [];
-        return false;             // nothing in browsers local storage
-    }
- 
-    // Convert the tasks from stringified format back into an array of objects
-    tasks = JSON.parse( tasks );
-    
- 
-    // Iterate throught the array and create the tasks elements on the page.
-    for( var i = 0; i < tasks.length; i++ ) {
-
-        tasks[i].id = taskIdCounter;            // reassign the task Id values.
-
-        var listItemEl = document.createElement( "li" );   // create the "li" item/selector. 
-        listItemEl.className = "task-item";                // assign the proper class to this new item. 
-    
-        // Add a 'task-id' value as a custom attribute, so we know which task is which. 
-        listItemEl.setAttribute("data-task-id", tasks[i].id );
-        listItemEl.setAttribute("draggable", "true");      // also set this element to be draggable
-    
-        // Create a 'div' to hold the task info and add it to the list item just created. 
-        var taskInfoEl = document.createElement( "div" );
-        taskInfoEl.className = "task-info";                // give the 'div' a class name
-    
-        // Add content and style to this new 'div' element 
-        taskInfoEl.innerHTML = "<h3 class='task-name'>" + tasks[i].name + "</h3><span class='task-type'>" + tasks[i].type + "</span>";
-    
-        // Put things all together using .appendChild 
-        listItemEl.appendChild( taskInfoEl );                    // this adds the 'h3' and 'span' data 
-        var taskActionsEl = createTaskActions( tasks[i].id );    // create the action buttons
-        listItemEl.appendChild( taskActionsEl );                 // add the buttons to the 'li'
-      
-        // Now we need to put the tasks into the appropriate status columns
-        if( tasks[i].status === "to do" ) {
-            listItemEl.querySelector( "select[name='status-change']").selectedIndex = 0;
-            tasksToDoEl.appendChild(listItemEl);
-        }
-        else if( tasks[i].status === "in progress" ) {
-            listItemEl.querySelector( "select[name='status-change']").selectedIndex = 1;
-            tasksInProgressEl.appendChild(listItemEl);
-        }
-        else if( tasks[i].status === "completed" ) {
-            listItemEl.querySelector( "select[name='status-change']").selectedIndex = 2;
-            tasksCompletedEl.appendChild(listItemEl);
-        }
-
-        
-    
-        // Increment the 'task-id' value.
-        taskIdCounter++; 
-    }
-}
 
 
 
 // /////////////////////////////////////////////////////////////////////////////////// 
 // Setup the (form) event handler and call-back function .  When the form is submitted the handler will create a new task. 
 // The "submit" event is invoked when a button with 'type=submit' is clicked, or the user presses '[Enter]'. 
-formEl.addEventListener( "submit", taskFormHandler );
-
-// Add the evemnt listener for the main page to determine when the edit/delete/action controls were activated.
-pageContentEl.addEventListener( "click", taskButtonHandler );
-
-// Add an event listenter for the main page to detect a change in task status
-pageContentEl.addEventListener( "change", taskStatusChangeHandler );
-
-// Add an event listenter for the main page to detect the drag/drop action
-pageContentEl.addEventListener( "dragstart", dragTaskHandler );
-
-// Add an event listener for the 'drag over' event.
-pageContentEl.addEventListener( "dragover", dropZoneDragHandler );
-
-// Add an evet listener for the 'drop' event.
-pageContentEl.addEventListener( "drop", dropTaskHandler );
-
-// Add an event listener for the 'drag leave' event.
-pageContentEl.addEventListener( "dragleave", dragLeaveHandler );
+formEl.addEventListener( "submit", quizHandler );
 
 
-loadTasks();
+
+loadScores();         // load the current high score information
