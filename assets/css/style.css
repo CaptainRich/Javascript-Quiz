@@ -125,3 +125,19 @@
   border: 2px solid var(--tertiary);
 
 }
+
+
+.results-wrapper {
+  display: flex;
+  flex: wrap;
+  justify-content: center;
+  color: var(--tertiary);
+  font-size: 1.0rem;
+  text-align: center;
+  margin-bottom: 5px;
+}
+
+.results {
+  padding-left: 20px;
+  padding-right: 20px;
+}
