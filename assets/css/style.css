@@ -3,17 +3,16 @@
 }
 
 :root {
-  --primary: #44e9ff;
-  --secondary: #497980;
-  --tertiary: rgb(192, 246, 253);
-  --grey: #333;
+  --primary: darkblue;
+  --secondary: lightblue;
+  --tertiary: #333;
+  --fourth: #6eaee9;
   font-size: 62.5%;
-  --fourth: purple;
 }
 
 body {
-  background: #ededed;
-  color: var(--grey);
+  background: gainsboro;
+  color: var(--tertiary);
   margin: 0;
   padding: 0;
   display: flex;
@@ -23,9 +22,11 @@ body {
 }
 
 header {
-  background: var(--secondary);
-  padding: 30px 25px;
+  background: var(--fourth);
+  padding: 20px 25px;
+  border-top: 5px solid var(--primary);
   border-bottom: 5px solid var(--primary);
+  text-align: center;
 }
 
 header p {
@@ -34,8 +35,7 @@ header p {
   font-size: 2rem;
 }
 
-p,
-li {
+p, li {
   font-size: 1.6rem;
 }
 
@@ -51,7 +51,7 @@ form input {
   padding: 12px;
   width: 100%;
   font-size: 2.2rem;
-  border: 2px solid var(--grey);
+  border: 2px solid var(--tertiary);
   border-radius: 12px;
 }
 
@@ -77,18 +77,19 @@ footer {
   font-size: 4.5rem;
 }
 
-.page-content {
+.quiz-content {
   flex: 1;
   display: flex;
   flex-wrap: wrap;
   justify-content: center;
-  margin: 25px auto;
-  width: 95%;
+  margin: 10px ;
+  max-width: 400px;
 }
 
-.task-list-wrapper {
+.quiz-wrapper {
   flex: 1;
   margin: 0 20px 20px;
+  justify-content: center;
 }
 
 .list-title {
@@ -102,13 +103,13 @@ footer {
   height: calc(100% - 50px);
   background: rgb(196, 196, 196);
   border-radius: 12px;
-  border: 2px solid var(--grey);
+  border: 2px solid var(--tertiary);
 }
 
 .task-item {
-  color: var(--grey);
+  color: var(--tertiary);
   padding: 15px 15px;
-  border: 2px solid var(--grey);
+  border: 2px solid var(--tertiary);
   background: var(--tertiary);
   border-radius: 12px;
   margin-bottom: 20px;
@@ -146,15 +147,15 @@ footer {
   border-radius: 12px;
   position: relative;
   top: -3px;
-  box-shadow: 0 3px var(--grey);
+  box-shadow: 0 3px var(--tertiary);
 }
 
 .btn:hover {
-  box-shadow: 0 2px var(--grey);
+  box-shadow: 0 2px var(--tertiary);
   top: -2px;
 }
 .btn:active {
-  box-shadow: 0 0px var(--grey);
+  box-shadow: 0 0px var(--tertiary);
   top: 0;
 }
 
@@ -176,7 +177,7 @@ footer {
   width: 100%;
   max-width: 100%;
   margin: 0;
-  border: 2px solid var(--grey);
+  border: 2px solid var(--tertiary);
   border-radius: 12px;
   -moz-appearance: none;
   -webkit-appearance: none;

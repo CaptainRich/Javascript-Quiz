@@ -1,26 +1,47 @@
 
 // Define the button variable for later use. 
-//var buttonEl = document.querySelector("#save-task");     // mvoved the listener to the form itself 
 
-// Define the variable for the event listener for the form. 
-var formEl = document.querySelector( "#task-form" );
+// Define the variable for the event listener for the quiz form. 
+var quizEl = document.querySelector( "#quiz-form" );
 
-// Define a variable for the "to do list". 
-var tasksToDoEl = document.querySelector( "#tasks-to-do" );
 
-// Define a variable to be used as a task ID value. */
-var taskIdCounter = 0;
+// Define a variables to be used to monitor right/wrong answers. */
+var questionsRight = 0;
+var questionsWrong = 0;
 
 // Define a variable for the main page so an event listener for the action buttons can be implemented.
 var pageContentEl = document.querySelector( "#page-content" );
 
-// Define variables need to track the task status
-var tasksInProgressEl = document.querySelector( "#tasks-in-progress" );
-var tasksCompletedEl  = document.querySelector( "#tasks-completed" );
 
-// Define an empty array, which will hold "task objects" to enable persistence (using 'localstorage').
-var tasks = [];             // this will eventually hold 'task objects', for storage and retrieval.
+// Define the object that will hold the high scorer's initials and score.
+var highScorer = {
+    initials: "",
+    score: 0
+};  
 
+// Define an array of quiz objects.  Each object will contain:
+//   - the quiz statement
+//   - 1 first possible answer
+//   - 2 second possible answer
+//   - 3 third possible answer
+//   - 4 fourth possible answer
+//   - correct answer
+
+var quizData = [ 
+    { question: "Q1: a += 1 is the same as a++?",
+      answer1:  "Yes",
+      answer2:  "No",
+      answer3:  "",
+      answer4:  "",
+      solution: "1"},
+
+     { question: "Q2: With the ++ operator, when is i++ incremented?",
+      answer1:  "Before the index 'i' is used in the loop.",
+      answer2:  "After the first use of 'i' in the loop.",
+      answer3:  "After all uses of 'i' in the loop.",
+      answer4:  "Just before 'i' is evaluated in the 'for' statement.",
+      solution: "4"}
+];
 
 
 // ///////////////////////////////////////////////////////////////////////////////////  

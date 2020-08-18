@@ -7,10 +7,28 @@
 
          <!--  Add a "favicon" image to the Browser title tab.  -->
          <link rel="icon" href="https://findicons.com/files/icons/2740/pretty_office_icon_set_part_10/128/test_paper.png"/>
-         
+
+         <!-- Link to the style sheet. -->
+         <link rel="stylesheet" href="./assets/css/style.css">    
 </head>
 
 <body>
+    <header>
+        <!-- Setup the top of the page.-->
+        <h1 class="page-title">JavaScript Quiz</h1>
+        <p>Click [Start] to begin the timed quiz.</p>
+    </header>
+
+    <!-- Define the panel area where the quiz text will go. -->
+    <main class="quiz-content"  id="quiz-content" >
+    
+        <!-- The quiz text content -->
+        <section class="quiz-wrapper">
+            <h2 class="quiz-title">Quiz text goes here</h2>
+            <ul class="task-list" id="tasks-in-progress"></ul>
+        </section>
+
+    </main>
     
 </body>
 </html>
