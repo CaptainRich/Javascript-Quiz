@@ -19,16 +19,29 @@
         <p>Click [Start] to begin the timed quiz.</p>
     </header>
 
+    <!-- Setup the area for the start button and the timer display. -->
+    <section class="start-time">
+
+        <button class="btn" id="start" type="submit">Start Quiz</button>
+        <button class="time" id="timer" disabled>Time Left:&nbsp;&nbsp;&nbsp;</button>
+
+    </section>
+
     <!-- Define the panel area where the quiz text will go. -->
     <main class="quiz-content"  id="quiz-content" >
+
     
         <!-- The quiz text content -->
         <section class="quiz-wrapper">
-            <h2 class="quiz-title">Quiz text goes here</h2>
-            <ul class="task-list" id="tasks-in-progress"></ul>
+            <h2 class="quiz-title">Quiz Question</h2>
+            <ul class="quiz-box" id="quiz-question"></ul>
         </section>
 
     </main>
+
+    <footer>
+        &copy; 2020 by Quizinator
+    </footer>
     
 </body>
 </html>
