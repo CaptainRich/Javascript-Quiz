@@ -63,15 +63,16 @@ var saveScores = function() {
 var loadScores = function() {
 
     // Get the tasks from local storage
-    highScore = localStorage.getItem( "highScore" );
+    var storedHighScore = localStorage.getItem( "highScore" );
 
-    if( highScore === null ) {
-        highScore= [];
-        return false;             // nothing in browsers local storage
+    if( storedHighScore === null ) {
+        highScore.initials = "NA";
+        highScore.score    = 0;
+        return highScore;             // nothing in browsers local storage
     }
  
     // Convert the score info from stringified format back into an array of objects
-    highScore = JSON.parse( highScore );
+    highScore = JSON.parse( storedHighScore );
     return highScore;   
     
 }
@@ -80,6 +81,14 @@ var loadScores = function() {
 var quizHandler = function( event ) {
 
     // event.preventDefault();                 // prevent the browser from reloading the page. 
+   
+
+    // Load any existing "high score" information from
+    // local storage and display it on the page.
+    highScore = loadScores();
+    document.querySelector("#prior").textContent = "Prior High Score: " + highScore.initials + ", " + highScore.score;
+    
+
 
     quizTime();                                // start the timer
 
@@ -94,7 +103,8 @@ var quizHandler = function( event ) {
         }
 
         // Put the quiz question in the box.
-        var userAnswer = showQuestion( quizData[i] );
+        var userAnswer = 0;
+        //var userAnswer = showQuestion( quizData[i] );
 
         // When the user picks an answer, check if it is correct and
         // adjsut the scoring accordingly (+2 for correct, -1 for incorrect).
@@ -109,9 +119,8 @@ var quizHandler = function( event ) {
 
     }
 
-    // If the user's score is positive, load the "high score" information from
-    // local storage and determine if we can update it.
-    highScore = loadScores();
+    quizScore = 4;
+
 
    // If the user's score is positive, determine if we can save it.
     if( highScore.score >= quizScore ){
@@ -124,7 +133,7 @@ var quizHandler = function( event ) {
         }
 
         // Take the first two characters and set the object for local storage.
-        highScore.initials = userInitials.slice(0,1);
+        highScore.initials = userInitials.slice(0,2);
         highScore.score    = quizScore;
 
         saveScores();
@@ -468,7 +477,8 @@ var dropTaskHandler = function( event ) {
 
 
 // /////////////////////////////////////////////////////////////////////////////////// 
-// Setup the (form) event handler and call-back function .  When the form is submitted the handler will create a new task. 
+// Setup the (form) event handler and call-back function .  When the quiz button is clicked the handler 
+// start the timer and kick off the quiz questions. 
 // The "submit" event is invoked when a button with 'type=submit' is clicked, or the user presses '[Enter]'. 
-quizEl.addEventListener( "submit", quizHandler );
+quizEl.addEventListener( "click", quizHandler );
 
