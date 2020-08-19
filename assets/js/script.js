@@ -114,6 +114,8 @@ var quizHandler = function( event ) {
         if( userAnswer === quizData[i].solution ) {
             // User answer is correct, increase score
             quizScore += 2;
+
+            // Display answer status to the user
         }
         else {
             // User answer is incorrect, decrease score
