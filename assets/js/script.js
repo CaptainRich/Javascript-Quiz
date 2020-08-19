@@ -8,8 +8,11 @@ var quizEl = document.querySelector( "#quiz-page" );
 // Define a variables to be used to monitor the user's score. */
 var quizScore = 0;
 
+// Define the length of permitted time for the quiz
+var timeLeft = 30;
+
 // Define the timer value as a global variable
-var timerValue = document.getElementById( "timer");
+var timerValue = document.querySelector( "#timer");
 
 
 // Define a variable for the main page so an event listener for the action buttons can be implemented.
@@ -98,7 +101,7 @@ var quizHandler = function( event ) {
     for( var i = 0; i < quizData.length; i++ ) {
 
         // As long as there is time left, put up the next quiz question
-        if( timerValue <= 0 ) {
+        if( timeLeft <= 0 ) {
             break;                // out of time, exit the loop
         }
 
@@ -118,8 +121,6 @@ var quizHandler = function( event ) {
         }
 
     }
-
-    quizScore = 4;
 
 
    // If the user's score is positive, determine if we can save it.
@@ -145,19 +146,17 @@ var quizHandler = function( event ) {
 // ///////////////////////////////////////////////////////////////////////////////////  
 // Define the countdown timer function
 var quizTime = function() {
-    var timeLeft = 30;          // only 30 seconds allowed
     
 
-    var countDown = setInterval( function() {
-        if( countDown > 0 ) {
-            timerValue.textContent = "Time Left: ", + --timeLeft;
-            console.log( timeLeft );
+    var x = setInterval( function() {
+        if( timeLeft > 0 ) {
+            timerValue.textContent = "Time Left: " + --timeLeft;
         }
         else {
-            clearInterval( countDown );
+            clearInterval( x );
             timerValue.textContent = "Quiz Over";
         }
-    }, 30000 );
+    }, 1000 );
 }
 
 // ///////////////////////////////////////////////////////////////////////////////////  
