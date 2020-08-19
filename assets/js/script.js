@@ -2,19 +2,22 @@
 // Define the button variable for later use. 
 
 // Define the variable for the event listener for the quiz form. 
-var quizEl = document.querySelector( "#quiz-form" );
+var quizEl = document.querySelector( "#quiz-page" );
 
 
-// Define a variables to be used to monitor right/wrong answers. */
-var questionsRight = 0;
-var questionsWrong = 0;
+// Define a variables to be used to monitor the user's score. */
+var quizScore = 0;
+
+// Define the timer value as a global variable
+var timerValue = document.getElementById( "timer");
+
 
 // Define a variable for the main page so an event listener for the action buttons can be implemented.
 var pageContentEl = document.querySelector( "#page-content" );
 
 
 // Define the object that will hold the high scorer's initials and score.
-var highScorer = {
+var highScore = {
     initials: "",
     score: 0
 };  
@@ -69,85 +72,83 @@ var loadScores = function() {
  
     // Convert the score info from stringified format back into an array of objects
     highScore = JSON.parse( highScore );
-    
- 
-
-
-        // var listItemEl = document.createElement( "li" );   // create the "li" item/selector. 
-        // listItemEl.className = "task-item";                // assign the proper class to this new item. 
-    
-        // // Add a 'task-id' value as a custom attribute, so we know which task is which. 
-        // listItemEl.setAttribute("data-task-id", tasks[i].id );
-        // listItemEl.setAttribute("draggable", "true");      // also set this element to be draggable
-    
-        // // Create a 'div' to hold the task info and add it to the list item just created. 
-        // var taskInfoEl = document.createElement( "div" );
-        // taskInfoEl.className = "task-info";                // give the 'div' a class name
-    
-        // // Add content and style to this new 'div' element 
-        // taskInfoEl.innerHTML = "<h3 class='task-name'>" + tasks[i].name + "</h3><span class='task-type'>" + tasks[i].type + "</span>";
-    
-        // // Put things all together using .appendChild 
-        // listItemEl.appendChild( taskInfoEl );                    // this adds the 'h3' and 'span' data 
-        // var taskActionsEl = createTaskActions( tasks[i].id );    // create the action buttons
-        // listItemEl.appendChild( taskActionsEl );                 // add the buttons to the 'li'
-      
-        // // Now we need to put the tasks into the appropriate status columns
-        // if( tasks[i].status === "to do" ) {
-        //     listItemEl.querySelector( "select[name='status-change']").selectedIndex = 0;
-        //     tasksToDoEl.appendChild(listItemEl);
-        // }
-        // else if( tasks[i].status === "in progress" ) {
-        //     listItemEl.querySelector( "select[name='status-change']").selectedIndex = 1;
-        //     tasksInProgressEl.appendChild(listItemEl);
-        // }
-        // else if( tasks[i].status === "completed" ) {
-        //     listItemEl.querySelector( "select[name='status-change']").selectedIndex = 2;
-        //     tasksCompletedEl.appendChild(listItemEl);
-        // }
-
+    return highScore;   
     
 }
 // ///////////////////////////////////////////////////////////////////////////////////  
 //Define an anonymous function to create a new task item  
 var quizHandler = function( event ) {
 
-   // event.preventDefault();                 // prevent the browser from reloading the page. 
+    // event.preventDefault();                 // prevent the browser from reloading the page. 
 
-    // Obtain the task name and type just defined from the input form. 
-    var taskNameInput = document.querySelector( "input[name='task-name']").value;
-    var taskTypeInput = document.querySelector( "select[name='task-type']").value;
+    quizTime();                                // start the timer
 
-    // Verify that input was provided to both form controls. 
-    if( !taskNameInput  ||  !taskTypeInput ) {
-        alert( "You need to define a task and select a type!");
-        return false;
+    // Loop over the quiz questions and display them in the quiz box. This continues 
+    // until either all the quesions are answered or the timer expires.
+
+    for( var i = 0; i < quizData.length; i++ ) {
+
+        // As long as there is time left, put up the next quiz question
+        if( timerValue <= 0 ) {
+            break;                // out of time, exit the loop
+        }
+
+        // Put the quiz question in the box.
+        var userAnswer = showQuestion( quizData[i] );
+
+        // When the user picks an answer, check if it is correct and
+        // adjsut the scoring accordingly (+2 for correct, -1 for incorrect).
+        if( userAnswer === quizData[i].solution ) {
+            // User answer is correct, increase score
+            quizScore += 2;
+        }
+        else {
+            // User answer is incorrect, decrease score
+            quizScore -= 1;
+        }
+
     }
 
-    // Blank out any earlier data from the form. 
-    formEl.reset();                              // this works since 'formEl' is global. 
+    // If the user's score is positive, load the "high score" information from
+    // local storage and determine if we can update it.
+    highScore = loadScores();
 
-    // Detect if a task is being added (created) or edited
-    var isEdit = formEl.hasAttribute( "data-task-id" );
-
-    // Based on whether or not the form has the 'data-task-id' decide if we are adding
-    // or editing a task.
-    if (isEdit) {
-        var taskId = formEl.getAttribute("data-task-id");
-        completeEditTask(taskNameInput, taskTypeInput, taskId);
+   // If the user's score is positive, determine if we can save it.
+    if( highScore.score >= quizScore ){
+        alert( "Sorry, you don't have the highest score." );
     }
-    else {  // There was no 'data-task-id' attribute, this is a new task to be added (created)
+    else {
+        var userInitials = prompt ( "Enter your initials to save your score: " );
+        if( userInitials === null ) {
+            return;
+        }
 
-        // Package this data in an 'object' to pass on to the 'createTaskEl' function. 
-        var taskDataObj = {
-            name: taskNameInput,
-            type: taskTypeInput,
-            status: "to do"                 // known status for newly created tasks
-        };
+        // Take the first two characters and set the object for local storage.
+        highScore.initials = userInitials.slice(0,1);
+        highScore.score    = quizScore;
 
-        // Put the new task on the page. 
-        createTaskEl(taskDataObj);
-    } 
+        saveScores();
+
+    }
+
+}
+
+// ///////////////////////////////////////////////////////////////////////////////////  
+// Define the countdown timer function
+var quizTime = function() {
+    var timeLeft = 30;          // only 30 seconds allowed
+    
+
+    var countDown = setInterval( function() {
+        if( countDown > 0 ) {
+            timerValue.textContent = "Time Left: ", + --timeLeft;
+            console.log( timeLeft );
+        }
+        else {
+            clearInterval( countDown );
+            timerValue.textContent = "Quiz Over";
+        }
+    }, 30000 );
 }
 
 // ///////////////////////////////////////////////////////////////////////////////////  
@@ -469,8 +470,5 @@ var dropTaskHandler = function( event ) {
 // /////////////////////////////////////////////////////////////////////////////////// 
 // Setup the (form) event handler and call-back function .  When the form is submitted the handler will create a new task. 
 // The "submit" event is invoked when a button with 'type=submit' is clicked, or the user presses '[Enter]'. 
-formEl.addEventListener( "submit", quizHandler );
+quizEl.addEventListener( "submit", quizHandler );
 
-
-
-loadScores();         // load the current high score information
