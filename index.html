@@ -26,15 +26,25 @@
     </section>
 
     <!-- Define the panel area where the quiz text will go. -->
-    <main class="quiz-content"  id="quiz-content" >
-
+    <main class="quiz-content" id="quiz-content">
     
         <!-- The quiz text content -->
         <section class="quiz-wrapper">
             <h2 class="quiz-title">Quiz Question</h2>
-            <ul class="quiz-box" id="quiz-question"></ul>
+            <div class="quiz-box" id="quiz-question">
+    
+    
+            </div>
         </section>
-
+    
+        <response class="response-wrapper" >
+            <!--  Setup the response form. -->
+            <div class="form-group">
+                <input type='text' name='userSelection' class='form-group' id='user-answer' placeholder='Enter answer number' />
+                <!-- <button class="form-group form-btn" id="process-answer" type="submit">Check Answer</button> -->
+            </div>
+        </response>
+    
     </main>
 
     <results class="results-wrapper">

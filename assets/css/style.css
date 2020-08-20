@@ -126,6 +126,34 @@
 
 }
 
+.response-wrapper {
+  flex: 1;
+  margin: 0 20px 20px 20px;
+  justify-content: center;
+}
+
+.form-group {
+  display: flex;
+  flex: wrap;
+  justify-content: center;
+  margin: 0 10px 20px 10px;
+  padding-left: 10px;
+  padding-right: 10px;
+  border-radius: 12px;
+}
+
+.form-btn {
+  padding: 10px 15px;
+  background: var(--fourth);
+  font-size: 1.5rem;
+  border-radius: 12px; 
+  top: -3px;
+  box-shadow: 0 3px var(--tertiary);
+  margin-right: 15px;
+  align-items: center;
+  display: block;
+}
+
 
 .results-wrapper {
   display: flex;
@@ -135,10 +163,14 @@
   font-size: 1.0rem;
   text-align: center;
   margin-bottom: 5px;
-  
+  max-height: 50px;
 }
 
 .results {
   padding-left: 20px;
   padding-right: 20px;
+}
+
+.wrong-answer {
+  color: red;
 }
