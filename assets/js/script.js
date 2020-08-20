@@ -1,14 +1,19 @@
 
 // Define the button variable for later use. 
 
-// Define the variable for the event listener for the quiz form. 
+// Define the variable for the event listener for the start button. 
 var quizEl = document.querySelector( "#quiz-page" );
+
+// Define the variable for the event listener for the (form) answer response.
+var formEl = document.querySelector( "#process-answer");
 
 // Define the variable for the actual quiz box area
 var newQuizQuestion = document.querySelector( "#quiz-question" );
 
-// Define the variable to hold the quiz response instruction form area.
+// Define the variable to hold the quiz response instruction form area, and the user's answer
 var quizResponse = "<input type='text' name='userSelection' class='quiz-box' placeholder='Enter answer number' />";
+var userAnswer = 0;
+var numValidAnswers = 0;              // tracks the number of valid answers for the current question
 
 
 // Define a variables to be used to monitor the user's score. */
@@ -130,6 +135,9 @@ var quizHandler = function( event ) {
 
     //quizTime();                                // start the timer
 
+    // Display the first question and invoke the response form handler.
+
+
     // Loop over the quiz questions and display them in the quiz box. This continues 
     // until either all the quesions are answered or the timer expires.
 
@@ -143,6 +151,11 @@ var quizHandler = function( event ) {
         // Put the quiz question in the box.
         console.log( "about to show question ", i );
         var userAnswer = showQuestion( quizData[i] );
+
+        // Wait for the button handler to give us an answer
+        while( userAnswer === 0 ) {
+            // Just wait for "userAnswer" to be set to a valid value > 0
+        }
 
         // When the user picks an answer, check if it is correct and
         // adjsut the scoring accordingly (+2 for correct, -1 for incorrect).
@@ -196,27 +209,32 @@ var showQuestion = function( quizQuestion ) {
     var questionText = quizQuestion.question;
 
     // Build the queston text
-    for( var i = 0; i < quizQuestion.possibleAnswers.length; i++ ) {
+    numValidAnswers = quizQuestion.possibleAnswers.length;
+    for( var i = 0; i < numValidAnswers; i++ ) {
         questionText += quizQuestion.possibleAnswers[i];
     }
     
     // Add the quiz question
     newQuizQuestion.innerHTML = "<p>" + questionText + "</p>";
 
-    // Loop until there is a valid answer in the  input form
-    var valid = false;
+}
 
-    while( !valid ){
-        var ans  = document.getElementById("user-answer").value;
-        var ians = parseInt( ans );
 
-        if( ians > 0 && ians <= quizQuestion.possibleAnswers.length ) {
-            userAnswer = ians;
-            valid      = true;
-        }
+// ///////////////////////////////////////////////////////////////////////////////////  
+// Define the handler for the "user respose button" [Check Answer]
+var questionHandler = function(  ) {
+
+    var ans  = document.getElementById("user-answer").value;
+    var ians = parseInt( ans );
+
+    if( ians > 0 && ians <= numValidAnswers ) {
+        userAnswer = ians;
+        valid      = true;
+    }
+    else {
+        userAnswer = 0;
     }
 
-    return userAnswer;
 }
 
 // ///////////////////////////////////////////////////////////////////////////////////  
@@ -237,13 +255,11 @@ var quizTime = function() {
 
 
 // /////////////////////////////////////////////////////////////////////////////////// 
-// Setup the (form) event handler and call-back function .  When the quiz button is clicked the handler wukk
+// Setup the event handler when the quiz button is clicked.  The handler wukk
 // start the timer and kick off the quiz questions. 
 
 quizEl.addEventListener( "click", quizHandler );
 
 
-/* ulti line comment
-1
-2
-*/
+// Setup the input form handler, for the user's question response.
+formEl.addEventListener( "submit", questionHandler );
