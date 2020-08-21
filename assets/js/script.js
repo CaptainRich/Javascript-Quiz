@@ -2,10 +2,13 @@
 // Define the button variable for later use. 
 
 // Define the variable for the event listener for the start button. 
-var quizEl = document.querySelector( "#quiz-page" );
+var quizEl = document.querySelector( "#quiz-start" );
 
 // Define the variable for the event listener for the (form) answer response.
 var formEl = document.querySelector( "#process-answer");
+
+// Define the variable for the user response area
+var inputEl = document.querySelector( "#user-answer" ); 
 
 // Define the variable for the actual quiz box area
 var newQuizQuestion = document.querySelector( "#quiz-question" );
@@ -15,6 +18,9 @@ var quizResponse = "<input type='text' name='userSelection' class='quiz-box' pla
 var userAnswer = 0;
 var numValidAnswers = 0;              // tracks the number of valid answers for the current question
 
+
+// Define a variable for the current question.
+var iq = 0;
 
 // Define a variables to be used to monitor the user's score. */
 var quizScore = 0;
@@ -59,7 +65,7 @@ var quizData = [
                            "4) Just before 'i' is evaluated in the 'for' statement.<br>"],
       solution: "4"},
 
-    { question: "Q3: The external JavaScript file must containt the '<script>' tag?<br><br>",
+    { question: "Q3: The external JavaScript file must containt the 'script' tag?<br><br>",
       possibleAnswers: [ "1) True<br>", "2) False<br>" ],
       solution: "2"},
 
@@ -67,9 +73,9 @@ var quizData = [
       possibleAnswers: [ "1) Yes<br>", "2) No<br>" ],
       solution: "1"},
 
-    { question: "Q5: Where is the corect place to insert a JavaScript?<br><br>",
-      possibleAnswers:  [ "1) The <body> section<br>", 
-                          "2) The <head> section<br>",
+    { question: "Q5: Where is the corect place to insert JavaScript?<br><br>",
+      possibleAnswers:  [ "1) The 'body' section<br>", 
+                          "2) The 'head' section<br>",
                           "3) Both 1 and 2<br>"],
       solution: "3"},
 
@@ -133,69 +139,19 @@ var quizHandler = function( event ) {
     
 
 
-    //quizTime();                                // start the timer
+    quizTime();                                // start the timer
 
     // Display the first question and invoke the response form handler.
+    iq = 0;
+    showQuestion( quizData[iq] );           // subsequent questions will be shown by the handler
 
 
     // Loop over the quiz questions and display them in the quiz box. This continues 
     // until either all the quesions are answered or the timer expires.
 
-    for( var i = 0; i < quizData.length; i++ ) {
-
-        // As long as there is time left, put up the next quiz question
-        if( timeLeft <= 0 ) {
-            break;                // out of time, exit the loop
-        }
-
-        // Put the quiz question in the box.
-        console.log( "about to show question ", i );
-        var userAnswer = showQuestion( quizData[i] );
-
-        // Wait for the button handler to give us an answer
-        while( userAnswer === 0 ) {
-            // Just wait for "userAnswer" to be set to a valid value > 0
-        }
-
-        // When the user picks an answer, check if it is correct and
-        // adjsut the scoring accordingly (+2 for correct, -1 for incorrect).
-        if( userAnswer === parseInt(quizData[i].solution) ) {
-            // User answer is correct, increase score
-            quizScore += 2;
-
-            // Display answer status to the user
-            answer.innerHTML = "Result: Correct";         
-        }
-        else {
-            // User answer is incorrect, decrease score
-            quizScore -= 1;
-            
-            // Display answer status to the user
-            answer.innerHTML = "Result: Wrong";
-            
-        }
-        currScore.textContent = "Score: " + quizScore;
-
-    }
 
 
-   // If the user's score is positive, determine if we can save it.
-    if( highScore.score >= quizScore ){
-        alert( "Sorry, you don't have the highest score." );
-    }
-    else {
-        var userInitials = prompt ( "Enter your initials to save your score: " );
-        if( userInitials === null ) {
-            return;
-        }
 
-        // Take the first two characters and set the object for local storage.
-        highScore.initials = userInitials.slice(0,2);
-        highScore.score    = quizScore;
-
-        saveScores();
-
-    }
 
 }
 
@@ -222,19 +178,75 @@ var showQuestion = function( quizQuestion ) {
 
 // ///////////////////////////////////////////////////////////////////////////////////  
 // Define the handler for the "user respose button" [Check Answer]
-var questionHandler = function(  ) {
+var questionHandler = function (event) {
 
-    var ans  = document.getElementById("user-answer").value;
-    var ians = parseInt( ans );
+    console.log("In questionHandler for # ", iq );
 
-    if( ians > 0 && ians <= numValidAnswers ) {
+    var ans = document.getElementById("user-answer").value;
+    var ians = parseInt(ans);
+
+    if (ians > 0 && ians <= numValidAnswers) {
         userAnswer = ians;
-        valid      = true;
+        valid = true;
     }
     else {
         userAnswer = 0;
     }
 
+    // When the user picks an answer, check if it is correct and
+    // adjsut the scoring accordingly (+2 for correct, -1 for incorrect).
+    if (userAnswer === parseInt(quizData[iq].solution)) {
+        // User answer is correct, increase score
+        quizScore += 2;
+
+        // Display answer status to the user
+        answer.innerHTML = "Result: Correct";
+    }
+    else {
+        // User answer is incorrect, decrease score
+        quizScore -= 1;
+
+        // Display answer status to the user and reduce the timer
+        answer.innerHTML = "Result: Wrong";
+        timeLeft = Math.max( 0, timeLeft-5 );
+
+    }
+
+    currScore.textContent = "Score: " + quizScore;
+
+    // As long as there is time left, and questions left, put up the next quiz question    
+    iq++;                       // bumpt the question index
+
+    if (iq < quizData.length && timeLeft > 0) {
+
+        // Blank out the 'user response' area of the form
+        inputEl.value = "";
+
+        // Put the quiz question in the box.
+        console.log("About to show question ", iq );
+        showQuestion(quizData[iq]);
+        userAnswer = 0;
+    }
+    else {
+        
+        // If the user's score is positive, determine if we can save it.
+        if (highScore.score >= quizScore) {
+            alert("Sorry, you don't have the highest score.");
+        }
+        else {
+            var userInitials = prompt("Enter your initials to save your score: ");
+            if (userInitials === null) {
+                return;
+            }
+
+            // Take the first two characters and set the object for local storage.
+            highScore.initials = userInitials.slice(0, 2);
+            highScore.score = quizScore;
+
+            saveScores();
+
+        }
+    }
 }
 
 // ///////////////////////////////////////////////////////////////////////////////////  
@@ -262,4 +274,4 @@ quizEl.addEventListener( "click", quizHandler );
 
 
 // Setup the input form handler, for the user's question response.
-formEl.addEventListener( "submit", questionHandler );
+formEl.addEventListener( "click", questionHandler );

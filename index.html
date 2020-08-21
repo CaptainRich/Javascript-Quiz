@@ -18,11 +18,12 @@
     </header>
 
     <!-- Setup the area for the start button and the timer display. -->
-    <section class="start-time" id="quiz-page">
-
-        <button class="btn" id="start" type="submit">Start Quiz</button>
-        <button class="time" id="timer" disabled>Time Left:&nbsp;&nbsp;&nbsp;</button>
-
+    <section class="start-time">
+    
+        <div class="start-time">
+            <button class="btn" id="quiz-start">Start Quiz</button>
+            <button class="time" id="timer" disabled>Time Left:&nbsp;&nbsp;&nbsp;</button>
+        </div>
     </section>
 
     <!-- Define the panel area where the quiz text will go. -->
@@ -32,16 +33,15 @@
         <section class="quiz-wrapper">
             <h2 class="quiz-title">Quiz Question</h2>
             <div class="quiz-box" id="quiz-question">
-    
-    
+                <!-- This is the reserved area for the quiz question. -->   
             </div>
         </section>
     
         <response class="response-wrapper" >
             <!--  Setup the response form. -->
             <div class="form-group">
-                <input type='text' name='userSelection' class='form-group' id='user-answer' placeholder='Enter answer number' />
-                <button class="form-group form-btn" id="process-answer" type="submit">Check Answer</button> 
+                <input type='text' name='userSelection' class='form-group' id='user-answer' placeholder='Enter answer number'></input>
+                <button class="form-btn form-group" id="process-answer" type="click">Check Answer</button> 
             </div>
         </response>
     
