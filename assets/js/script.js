@@ -62,10 +62,10 @@ var quizData = [
        possibleAnswers:  [ "1) Before 'i' is used in the loop.<br>",
                            "2) After the first use of 'i' in the loop.<br>",
                            "3) After all uses of 'i' in the loop.<br>",
-                           "4) Just before 'i' is evaluated in the 'for' statement.<br>"],
+                           "4) At the end of the loop, before the next pass.<br>"],
       solution: "4"},
 
-    { question: "Q3: The external JavaScript file must containt the 'script' tag?<br><br>",
+    { question: "Q3: The external JavaScript file must contain the 'script' tag?<br><br>",
       possibleAnswers: [ "1) True<br>", "2) False<br>" ],
       solution: "2"},
 
@@ -73,13 +73,13 @@ var quizData = [
       possibleAnswers: [ "1) Yes<br>", "2) No<br>" ],
       solution: "1"},
 
-    { question: "Q5: Where is the corect place to insert JavaScript?<br><br>",
+    { question: "Q5: Where is the correct place to insert JavaScript?<br><br>",
       possibleAnswers:  [ "1) The 'body' section<br>", 
                           "2) The 'head' section<br>",
                           "3) Both 1 and 2<br>"],
       solution: "3"},
 
-      { question: "Q6: The JavaScript expresson: x = 8 + '8' returns what?<br><br>",
+      { question: "Q6: The JavaScript expression: x = 8 + '8' returns what?<br><br>",
       possibleAnswers:  [ "1) 16<br>", 
                           "2) 88<br>",
                           "3) An error<br>",
@@ -100,7 +100,7 @@ var quizData = [
 // Define the function to save all the tasks to 'localStorage'
 var saveScores = function() {
 
-    // When pushing to 'localStorage' (which converts everything to a string), use a JSON converstion 
+    // When pushing to 'localStorage' (which converts everything to a string), use a JSON conversion 
     // so we can have a visual of what got stored.
     localStorage.setItem( "highScore", JSON.stringify(highScore) );
  
@@ -111,7 +111,7 @@ var saveScores = function() {
 // Define the function to load all the tasks from 'localStorage'
 var loadScores = function() {
 
-    // Get the tasks from local storage
+    // Get the high score from local storage
     var storedHighScore = localStorage.getItem( "highScore" );
 
     if( storedHighScore === null ) {
@@ -132,10 +132,7 @@ var quizHandler = function( event ) {
     // event.preventDefault();                 // prevent the browser from reloading the page. 
    
 
-    // Load any existing "high score" information from
-    // local storage and display it on the page.
-    highScore = loadScores();
-    priorHigh.textContent = "Prior High Score: " + highScore.initials + ", " + highScore.score;
+
     
 
 
@@ -147,7 +144,7 @@ var quizHandler = function( event ) {
 
 
     // Loop over the quiz questions and display them in the quiz box. This continues 
-    // until either all the quesions are answered or the timer expires.
+    // until either all the questions are answered or the timer expires.
 
 
 
@@ -164,7 +161,7 @@ var showQuestion = function( quizQuestion ) {
     // Obtain the question text
     var questionText = quizQuestion.question;
 
-    // Build the queston text
+    // Build the question text
     numValidAnswers = quizQuestion.possibleAnswers.length;
     for( var i = 0; i < numValidAnswers; i++ ) {
         questionText += quizQuestion.possibleAnswers[i];
@@ -177,7 +174,7 @@ var showQuestion = function( quizQuestion ) {
 
 
 // ///////////////////////////////////////////////////////////////////////////////////  
-// Define the handler for the "user respose button" [Check Answer]
+// Define the handler for the "user response button" [Check Answer]
 var questionHandler = function (event) {
 
     console.log("In questionHandler for # ", iq );
@@ -194,7 +191,7 @@ var questionHandler = function (event) {
     }
 
     // When the user picks an answer, check if it is correct and
-    // adjsut the scoring accordingly (+2 for correct, -1 for incorrect).
+    // adjust the scoring accordingly (+2 for correct, -1 for incorrect).
     if (userAnswer === parseInt(quizData[iq].solution)) {
         // User answer is correct, increase score
         quizScore += 2;
@@ -267,7 +264,7 @@ var quizTime = function() {
 
 
 // /////////////////////////////////////////////////////////////////////////////////// 
-// Setup the event handler when the quiz button is clicked.  The handler wukk
+// Setup the event handler when the quiz button is clicked.  The handler will
 // start the timer and kick off the quiz questions. 
 
 quizEl.addEventListener( "click", quizHandler );
@@ -275,3 +272,8 @@ quizEl.addEventListener( "click", quizHandler );
 
 // Setup the input form handler, for the user's question response.
 formEl.addEventListener( "click", questionHandler );
+
+    // Load any existing "high score" information from
+    // local storage and display it on the page.
+    highScore = loadScores();
+    priorHigh.textContent = "Prior High Score: " + highScore.initials + ", " + highScore.score;
