@@ -164,7 +164,7 @@ var showQuestion = function( quizQuestion ) {
 // Define the handler for the "user response button" [Check Answer]
 var questionHandler = function (event) {
 
-    console.log("In questionHandler for # ", iq );
+    //console.log("In questionHandler for # ", iq );
 
     var ans = document.getElementById("user-answer").value;
     var ians = parseInt(ans);
@@ -185,13 +185,15 @@ var questionHandler = function (event) {
 
         // Display answer status to the user
         answer.innerHTML = "Result: Correct";
+        answer.setAttribute( "style", "background: rgb(240, 240, 227)" );
     }
     else {
         // User answer is incorrect, decrease score
         quizScore -= 1;
 
         // Display answer status to the user and reduce the timer
-        answer.innerHTML = "Result: Wrong";
+        answer.innerHTML = "Result: Wrong  ";
+        answer.setAttribute( "style", "background: red" );
         timeLeft = Math.max( 0, timeLeft-5 );
 
     }
@@ -207,7 +209,7 @@ var questionHandler = function (event) {
         inputEl.value = "";
 
         // Put the quiz question in the box.
-        console.log("About to show question ", iq );
+        //console.log("About to show question ", iq );
         showQuestion(quizData[iq]);
         userAnswer = 0;
     }
@@ -215,10 +217,10 @@ var questionHandler = function (event) {
         
         // If the user's score is positive, determine if we can save it.
         if (highScore.score >= quizScore) {
-            alert("Sorry, you don't have the highest score.");
+            alert("Sorry, the quiz has ended, and you don't have the highest score. Start the quiz over if desired.");
         }
         else {
-            var userInitials = prompt("Enter your initials to save your score: ");
+            var userInitials = prompt("The quiz is over, you have the high score. Enter your initials to save your score: ");
             if (userInitials === null) {
                 return;
             }
