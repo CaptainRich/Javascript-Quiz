@@ -130,25 +130,12 @@ var loadScores = function() {
 var quizHandler = function( event ) {
 
     // event.preventDefault();                 // prevent the browser from reloading the page. 
-   
-
-
-    
-
 
     quizTime();                                // start the timer
 
     // Display the first question and invoke the response form handler.
     iq = 0;
     showQuestion( quizData[iq] );           // subsequent questions will be shown by the handler
-
-
-    // Loop over the quiz questions and display them in the quiz box. This continues 
-    // until either all the questions are answered or the timer expires.
-
-
-
-
 
 }
 
@@ -212,7 +199,7 @@ var questionHandler = function (event) {
     currScore.textContent = "Score: " + quizScore;
 
     // As long as there is time left, and questions left, put up the next quiz question    
-    iq++;                       // bumpt the question index
+    iq++;                       // bump the question index
 
     if (iq < quizData.length && timeLeft > 0) {
 
@@ -273,7 +260,9 @@ quizEl.addEventListener( "click", quizHandler );
 // Setup the input form handler, for the user's question response.
 formEl.addEventListener( "click", questionHandler );
 
-    // Load any existing "high score" information from
-    // local storage and display it on the page.
-    highScore = loadScores();
-    priorHigh.textContent = "Prior High Score: " + highScore.initials + ", " + highScore.score;
+
+// /////////////////////////////////////////////////////////////////////////////////// 
+// Load any existing "high score" information from
+// local storage and display it on the page.
+highScore = loadScores();
+priorHigh.textContent = "Prior High Score: " + highScore.initials + ", " + highScore.score;
