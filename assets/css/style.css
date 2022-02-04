@@ -39,16 +39,22 @@
   }
   
   
+/* This class works together with the "footer" class to keep the footer
+   at the bottom of the viewport, regardless of resizing. */
+.wrapper {
+  min-height: calc(100vh - 70px);  /* Note the '70px' matches the footer. */
+}
   
   footer {
     width: 100%;
     background: var(--fourth);
     color: var(--primary);
-    font-size: 2.0rem;
-    padding: 20px;
+    font-size: 1.5rem;
+    padding: 10px;
     border-top: 5px solid var(--primary);
     border-bottom: 5px solid var(--primary);
-    margin-top: 20px;            /* added to avoid touching the footer area */
+    margin-top: 10px;            /* added to avoid touching the footer area */
+    height: 60px;
   }
   
   

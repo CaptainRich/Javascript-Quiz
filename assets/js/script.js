@@ -157,6 +157,11 @@ var showQuestion = function( quizQuestion ) {
     // Add the quiz question
     newQuizQuestion.innerHTML = "<p>" + questionText + "</p>";
 
+    // Put the cursor in the input field for the answer and clear out any earlier text
+    var answerField = document.getElementById("user-answer");
+    answerField.focus();
+    answerField.innerText = "";
+
 }
 
 

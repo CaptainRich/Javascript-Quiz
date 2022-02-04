@@ -11,47 +11,51 @@
 </head>
 
 <body class="page-content"  id="quiz-page">
-    <header>
-        <!-- Setup the top of the page.-->
-        <h1 class="page-title">JavaScript Quiz</h1>
-        <p>Click [Start Quiz] to begin the timed quiz.</p>
-    </header>
-
-    <!-- Setup the area for the start button and the timer display. -->
-    <section class="start-time">
+    <div class="wrapper">
+        <!-- Wrapper to keep footer at the bottom -->
+        <header>
+            <!-- Setup the top of the page.-->
+            <h1 class="page-title">JavaScript Quiz</h1>
+            <p>Click [Start Quiz] to begin the timed quiz.</p>
+        </header>
     
-        <div class="start-time">
-            <button class="btn" id="quiz-start">Start Quiz</button>
-            <button class="time" id="timer" disabled>Time Left:&nbsp;&nbsp;&nbsp;</button>
-        </div>
-    </section>
-
-    <!-- Define the panel area where the quiz text will go. -->
-    <main class="quiz-content" id="quiz-content">
+        <!-- Setup the area for the start button and the timer display. -->
+        <section class="start-time">
     
-        <!-- The quiz text content -->
-        <section class="quiz-wrapper">
-            <h2 class="quiz-title">Quiz Question</h2>
-            <div class="quiz-box" id="quiz-question">
-                <!-- This is the reserved area for the quiz question. -->   
+            <div class="start-time">
+                <button class="btn" id="quiz-start">Start Quiz</button>
+                <button class="time" id="timer" disabled>Time Left:&nbsp;&nbsp;&nbsp;</button>
             </div>
         </section>
     
-        <response class="response-wrapper" >
-            <!--  Setup the response form. -->
-            <div class="form-group">
-                <input type='text' name='userSelection' class='form-group' id='user-answer' placeholder='Enter answer number'></input>
-                <button class="form-btn form-group" id="process-answer" type="click">Check Answer</button> 
-            </div>
-        </response>
+        <!-- Define the panel area where the quiz text will go. -->
+        <main class="quiz-content" id="quiz-content">
     
-    </main>
-
-    <results class="results-wrapper">
-        <h2 class="results" id="goodbad">Result: ______</h2>
-        <h2 class="results" id="score"> Score: __</h2>
-        <h2 class="results" id="prior">Prior High Score: NA, 00</h2>
-    </results>
+            <!-- The quiz text content -->
+            <section class="quiz-wrapper">
+                <h2 class="quiz-title">Quiz Question</h2>
+                <div class="quiz-box" id="quiz-question">
+                    <!-- This is the reserved area for the quiz question. -->
+                </div>
+            </section>
+    
+            <response class="response-wrapper">
+                <!--  Setup the response form. -->
+                <div class="form-group">
+                    <input type='text' name='userSelection' class='form-group' id='user-answer'
+                        placeholder='Enter answer number'></input>
+                    <button class="form-btn form-group" id="process-answer" type="click">Check Answer</button>
+                </div>
+            </response>
+    
+        </main>
+    
+        <results class="results-wrapper">
+            <h2 class="results" id="goodbad">Result: ______</h2>
+            <h2 class="results" id="score"> Score: __</h2>
+            <h2 class="results" id="prior">Prior High Score: NA, 00</h2>
+        </results>
+    </div>
 
     <footer>
         &copy; 2022 by R. Ay

@@ -10,7 +10,7 @@ Richard Ay, August 2020
 
 
 ## Project Objective
-As a coding boot camp student, I want to take  timed quiz on JavaScript fundamentals so that I can guage my progress compared to my peers.  The quiz utility should store high scores in the browser's local storage.
+As a coding boot camp student, I want to take  timed quiz on JavaScript fundamentals so that I can gauge my progress compared to my peers.  The quiz utility should store high scores in the browser's local storage.
 
 ## Acceptance Criteria
 Given I am taking a (JavaScript) code quiz:
@@ -36,11 +36,13 @@ https://captainrich.github.io/Javascript-Quiz/
 4) The user should enter the number of the correct answer and click [Check Answer]
 5) Upon evaluating the answer, either "Correct" or "Wrong is displayed with an adjusted score.
 * Correct answers increase the score by 2
-* Incorrect answers decrease the score by 1 AND decrease the time reamining by 5 seconds
+* Incorrect answers decrease the score by 1 AND decrease the time remaining by 5 seconds
 6) Quiz questions are continuously displayed until either:
 * All questions have been displayed and answered, or
 * Time runs out (allowed time starts at 30 seconds
 7) If the final score exceeds the high score saved on browser storage, the user is prompted for his/her initials to replace the score saved (in the browsers storage).
+
+The cursor is positioned to the "answer" field, and any prior value is blanked as each new question is displayed.
 
 
 ## Application Screen Shot
